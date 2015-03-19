@@ -1,267 +1,248 @@
-set encoding=utf-8
-set nocompatible               " be iMproved
-filetype off                   " required!
+" vim:fdm=marker:ts=4:sw=4:et:
+"        _
+" __   _(_)_ __ ___  _ __ ___
+" \ \ / / | '_ ` _ \| '__/ __|
+"  \ V /| | | | | | | | | (__
+"   \_/ |_|_| |_| |_|_|  \___|
+"
+" Scott's .vimrc file
+"
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" Section: Vundle {{{1
+"--------------------------------------------------------------------------
 
-" let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" Vundle help
-""""""""""""""
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+Plugin 'Solarized'
+Plugin 'majutsushi/tagbar'
+Plugin 'rking/ag.vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/syntastic'
+Plugin 'Raimondi/delimitMate'
+Plugin 'luochen1990/rainbow'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mhinz/vim-signify'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'jistr/vim-nerdtree-tabs'
 
 
-" VCS
-Bundle 'tpope/vim-fugitive'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
-" System
-Bundle 'vim-scripts/Gist.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'rking/ag.vim'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
-Bundle 'Raimondi/delimitMate'
-Bundle 'luochen1990/rainbow'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mhinz/vim-signify'
-Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
-
-" Syntaxes
-Bundle 'leshill/vim-json'
-Bundle 'puppetlabs/puppet-syntax-vim'
-Bundle 'jtratner/vim-flavored-markdown'
-Bundle 'othree/html5.vim'
-Bundle 'itspriddle/vim-jquery'
-Bundle 'atourino/jinja.vim'
-Bundle 'saltstack/salt-vim'
-Bundle 'ntpeters/vim-better-whitespace'
-
-" Python
-Bundle 'nvie/vim-flake8'
-Bundle 'fs111/pydoc.vim'
-
-" Ruby
-Bundle "vim-ruby/vim-ruby"
-Bundle 'tpope/vim-endwise'
-
-" Fun, but not useful
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'skammer/vim-css-color'
-Bundle 'mgutz/vim-colors'
-Bundle 'ehamberg/vim-cute-python'
-Bundle 'bling/vim-airline'
-
-" Required after vundle plugin definitions
-filetype plugin indent on
-
-" Change leader
-let mapleader = ","
-let g:mapleader = ","
-
-" Wildmenu
-set wildmenu
-set wildmode=list:longest
-set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.spl                            " compiled spelling word lists
-set wildignore+=*.sw?                            " Vim swap files
-set wildignore+=*.DS_Store                       " OSX bullshit
-set wildignore+=*.luac                           " Lua byte code
-set wildignore+=*.pyc                            " Python byte code
-set wildignore+=**.class                          " Cursed Java class files
-
-" Ignore in buffer explorer
-let g:netrw_liststyle= 1 " Tree-mode
-let g:netrw_list_hide= '.*\.swp$,.*/$'
-
-" Save when losing focus
-set autowriteall " Auto-save files when switching buffers or leaving vim.
-au FocusLost * silent! :wa
-au TabLeave * silent! :wa
-
-" Resize splits when the window is resized
-au VimResized * exe "normal! \<c-w>="
-
-" Basics
 syntax enable
-set number        " always show line numbers
-set hidden        " Allow un-saved buffers in background
-set clipboard=unnamed " Share system clipboard.
-set backspace=indent,eol,start " Make backspace behave normally.
-set directory=/tmp// " swap files
-set backupskip=/tmp/*,/private/tmp/*
-set ffs=unix,dos,mac "Default file types
-set nowrap        " don't wrap lines
-set showmatch     " set show matching parenthesis
-set ignorecase    " ignore case when searching
-set smartcase     " ignore case if search pattern is all lowercase,
-                  "  case-sensitive otherwise
-set hlsearch      " highlight search terms
-set incsearch     " show search matches as you type
-set history=1000         " remember more commands and search history
-set undolevels=1000      " use many muchos levels of undo
-set title                " change the terminal's title
-set visualbell           " don't beep
-set noerrorbells         " don't beep
-set guifont=Inconsolata\ for\ Powerline:h13
+if has('gui_running')
+    set background=dark
+    colorscheme solarized
+else
+ "   set background=dark
+ "       colorscheme solarized
+endif
+" Section: Key mappings {{{1
+"--------------------------------------------------------------------------
 
-" Remove the toolbar if we're running under a GUI (e.g. MacVIM).
-if has("gui_running")
-  set guioptions=-t
+"macros
+map <silent> <C-n> :NERDTreeToggle<CR>
+
+" Why not use the space or return keys to toggle folds?
+nnoremap <space> za
+nnoremap <CR> za
+vnoremap <space> zf
+
+" Section: Hacks {{{1
+"--------------------------------------------------------------------------
+
+" Make j & k linewise {{{2
+
+" turn off linewise keys -- normally, the `j' and `k' keys move the cursor down
+" one entire line. with line wrapping on, this can cause the cursor to actually
+" skip a few lines on the screen because it's moving from line N to line N+1 in
+" the file. I want this to act more visually -- I want `down' to mean the next
+" line on the screen
+map j gj
+map k gk
+
+" having Ex mode start or showing me the command history
+" is a complete pain in the ass if i mistype
+map Q <silent>
+map q: <silent>
+map K <silent>
+"map q <silent>
+
+" Make the cursor stay on the same line when window switching {{{2
+
+function! KeepCurrentLine(motion)
+    let theLine = line('.')
+    let theCol = col('.')
+    exec 'wincmd ' . a:motion
+    if &diff
+        call cursor(theLine, theCol)
+    endif
+endfunction
+
+nnoremap <C-w>h :call KeepCurrentLine('h')<CR>
+nnoremap <C-w>l :call KeepCurrentLine('l')<CR>
+" Section: Vim options {{{1
+"--------------------------------------------------------------------------
+
+
+set tags=/home/escogib/tags/*ctags
+set autoindent              " Carry over indenting from previous line
+set autoread                " Don't bother me hen a file changes
+set autowrite               " Write on :next/:prev/^Z
+set backspace=indent,eol,start
+                            " Allow backspace beyond insertion point
+set cindent                 " Automatic program indenting
+set cinkeys-=0#             " Comments don't fiddle with indenting
+set cino=(0                 " Indent newlines after opening parenthesis
+set commentstring=\ \ #%s   " When folds are created, add them to this
+set copyindent              " Make autoindent use the same chars as prev line
+set directory-=.            " Don't store temp files in cwd
+set encoding=utf8           " UTF-8 by default
+set expandtab               " No tabs
+set fileformats=unix,dos,mac  " Prefer Unix
+set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄
+                            " Unicode chars for diffs/folds, and rely on
+                            " Colors for window borders
+silent! set foldmethod=marker " Use braces by default
+set formatoptions=tcqn1     " t - autowrap normal text
+                            " c - autowrap comments
+                            " q - gq formats comments
+                            " n - autowrap lists
+                            " 1 - break _before_ single-letter words
+                            " 2 - use indenting from 2nd line of para
+set hidden                  " Don't prompt to save hidden windows until exit
+set history=200             " How many lines of history to save
+set hlsearch                " Hilight searching
+set ignorecase              " Case insensitive
+set incsearch               " Search as you type
+set infercase               " Completion recognizes capitalization
+set laststatus=2            " Always show the status bar
+set linebreak               " Break long lines by word, not char
+set list                    " Show invisble characters in listchars
+set listchars=tab:▶\ ,trail:◀,extends:»,precedes:«
+                            " Unicode characters for various things
+set matchtime=2             " Tenths of second to hilight matching paren
+set modelines=5             " How many lines of head & tail to look for ml's
+silent! set mouse=nvc       " Use the mouse, but not in insert mode
+set nobackup                " No backups left after done editing
+set nonumber                " No line numbers to start
+set visualbell t_vb=        " No flashing or beeping at all
+set nowritebackup           " No backups made while editing
+set printoptions=paper:letter " US paper
+set ruler                   " Show row/col and percentage
+set scroll=4                " Number of lines to scroll with ^U/^D
+set scrolloff=15            " Keep cursor away from this many chars top/bot
+set shiftround              " Shift to certain columns, not just n spaces
+set shiftwidth=4            " Number of spaces to shift for autoindent or >,<
+set shortmess+=A            " Don't bother me when a swapfile exists
+set showbreak=              " Show for lines that have been wrapped, like Emacs
+set showmatch               " Hilight matching braces/parens/etc.
+set sidescrolloff=3         " Keep cursor away from this many chars left/right
+set smartcase               " Lets you search for ALL CAPS
+set softtabstop=4           " Spaces 'feel' like tabs
+set suffixes+=.pyc          " Ignore these files when tab-completing
+set tabstop=4               " The One True Tab
+set notitle                 " Don't set the title of the Vim window
+set wildmenu                " Show possible completions on command line
+set wildmode=list:longest,full " List all options and complete
+set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
+
+" Section: Commands & Functions {{{1
+"--------------------------------------------------------------------------
+cmap w!! w !sudo tee >/dev/null %
+
+" trim spaces at EOL
+command! TEOL %s/ \+$//
+command! CLEAN retab | TEOL
+
+
+" Section: Python specifics {{{1
+"--------------------------------------------------------------------------
+
+if has('python')
+python << EOF
+import os
+import sys
+sys.path.append(os.path.join(os.getenv('HOME'), '.vim', 'python'))
+EOF
 endif
 
-" Default background & theme
-set background=dark
-colorscheme solarized
+" Section: CSCOPE {{{1
+"--------------------------------------------------------------------------
+if filereadable("/home/escogib/tags/upc.cscope")
+    cs add /home/escogib/tags/upc.cscope
+endif
 
-" Special characters for hilighting non-priting spaces/tabs/etc.
-set list listchars=tab:»\ ,trail:·
+if filereadable("/home/escogib/tags/up.cscope")
+    cs add /home/escogib/tags/up.cscope
+endif
 
-" Default Tabs & spaces
-set tabstop=4     " a tab is four spaces
-set shiftwidth=4  " number of spaces to use for autoindenting
-set softtabstop=4
-set expandtab
-set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
-set smarttab      " insert tabs on the start of a line according to
-                  "    shiftwidth, not tabstop
-set autoindent    " always set autoindenting on
-set copyindent    " copy the previous indentation on autoindenting
+if filereadable("/home/escogib/tags/bbmc.cscope")
+    cs add /home/escogib/tags/bbmc.cscope
+endif
 
-" General Code Folding
-set foldmethod=indent
-set foldlevel=99
+if filereadable("/home/escogib/tags/elib.cscope")
+    cs add /home/escogib/tags/elib.cscope
+endif
 
-" Highlight VCS conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+if filereadable("/home/escogib/tags/bbi.cscope")
+    cs add /home/escogib/tags/bbi.cscope
+endif
 
-" I CAN HAZ NORMAL REGEXES?
-nnoremap / /\v
-vnoremap / /\v
+" Section: Plugin Specific {{{1
+"--------------------------------------------------------------------------
 
-" Make sure we hilight extra whitespace in the most annoying way possible.
-" highlight ExtraWhitespace ctermbg=red guibg=red
-" match ExtraWhitespace /\s\+$/
-" autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-" autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-" autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-
-
-" General auto-commands
-autocmd FileType * setlocal colorcolumn=0
-" autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-
-" Get rid of trailing whitespace highlighting in mutt.
-autocmd FileType mail highlight clear ExtraWhitespace
-autocmd FileType mail setlocal listchars=
-
-" Toggle spellcheck in normal mode
-:map <F5> :setlocal spell! spelllang=en_us<CR>
-
-
-" Markdown configurations
-augroup markdown
-    au!
-    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
-augroup END
-
-" Ruby Configurations
-autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2 shiftwidth=2 colorcolumn=80
-
-" PHP Configurations
-autocmd FileType php setlocal colorcolumn=100
-
-" HTML configurations
-autocmd FileType html setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
-
-" Python configurations
-autocmd FileType python setlocal shiftwidth=4 expandtab tabstop=4 softtabstop=4
-autocmd FileType python setlocal colorcolumn=80
-autocmd FileType python map <buffer> <F4> :call Flake8()<CR>
-autocmd FileType python autocmd BufWritePre * :%s/\s\+$//e
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-
-" Javascript configurations
-au BufNewFile,BufReadPost *.js setlocal shiftwidth=2 expandtab
-
-" Ensure that JSON files have their filetype properly set.
-au BufRead,BufNewFile *.json set filetype=json
-
-" Puppet configurations
-au FileType puppet setlocal noexpandtab
-
-" Get jinja filetype selection working correctly for *.jinja.html files.
-au BufNewFile,BufReadPost *.jinja* setlocal filetype=htmljinja
-
-" Get rid of search hilighting with ,/
-nnoremap <silent> <leader>/ :nohlsearch<CR>
-
-" Fix those pesky situations where you edit & need sudo to save
-cmap w!! w !sudo tee % >/dev/null
-
-
-" Plugin Configurations
-"""""""""""""""""""""""
-
-" Pyflakes
-"autocmd BufWritePost *.py call Flake8()
-let g:flake8_ignore="E128,E501"
-let g:syntastic_python_checker_args='--ignore=E501,E128'
-
-" Gist
-let g:gist_clip_command = 'pbcopy'
-let g:gist_detect_filetype = 2
-let g:gist_show_privates = 1
-let g:gist_post_private = 1
-
-" TagBar
-nnoremap <silent> <F2> :TagbarToggle<CR>
-let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
-let g:tagbar_autoshowtag = 1
-let g:tagbar_autofocus = 1
-
-" crtl-p
+" NERD_tree.vim
+let NERDTreeIgnore = ['\~$', '\.pyc$']
+let NERDTreeShowBookmarks = 1
+let NERDTreeDirArrows = 0
+let g:Powerline_symbols = 'compatible'
+" Powerline
+if has('gui_running')
+  let NERDTreeDirArrows = 1
+  set laststatus=2
+  set encoding=utf-8
+  set t_Co=256
+  let g:Powerline_symbols = 'unicode'
+  "let g:Powerline_symbols = 'fancy'
+endif
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'  " search anything (in files, buffers and MRU files at the same time.)
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard']
-let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
-let g:ctrlp_root_markers = ['.git']
-"let g:ctrlp_working_path_mode = 'ra' " search for nearest ancestor like .git, .hg, and the directory of the current file
-let g:ctrlp_match_window_bottom = 0 " show the match window at the top of the screen
-let g:ctrlp_max_height = 10 " maxiumum height of match window
-let g:ctrlp_switch_buffer = 'et' " jump to a file if it's open already
-let g:ctrlp_use_caching = 1 " enable caching
-let g:ctrlp_clear_cache_on_exit=0 " speed up by not removing clearing cache evertime
-let g:ctrlp_show_hidden = 0 " don't show me dotfiles
-let g:ctrlp_mruf_max = 250 " number of recently opened files
-nmap ; :CtrlPBuffer<CR>
 
-" Double rainbow - What does it mean!?
-let g:rainbow_active = 1
+" Section: Experimental {{{1
+"--------------------------------------------------------------------------
 
-set laststatus=2
-let g:syntastic_enable_signs = 1
-let g:syntastic_auto_jump = 0
-let g:syntastic_puppet_lint_disable = 0
-
-" Airline configs
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
-
-" NerdTree
-map <leader>t :NERDTreeToggle<CR>
-let NERDTreeIgnore=['\.pyc$', '\~$']
-let g:nerdtree_tabs_open_on_gui_startup = 0
-let g:nerdtree_tabs_open_on_console_startup = 0
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ -g ""'
